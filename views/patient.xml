@@ -1,0 +1,86 @@
+<odoo>
+    <!-- Tree View -->
+    <record id="patient_tree_view" model="ir.ui.view">
+        <field name="name">patient.tree</field>
+        <field name="model">hms.patient</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="first_name"/>
+                <field name="last_name"/>
+                <field name="birth_date"/>
+                <field name="age"/>
+                <field name="blood_type" widget="radio" />
+                <field name="state"/>
+                <field name="department_id"/>
+
+
+                <field name="cr_ratio"/>
+                <field name="pcr"/>
+                <field name="history"/>
+                <field name="address"/>
+                <field name="profile_image" widget="image" class="oe_avatar"/>
+
+
+            </tree>
+        </field>
+    </record>
+    <record id="patient_form_view" model="ir.ui.view">
+        <field name="name">patient.form</field>
+        <field name="model">hms.patient</field>
+        <field name="arch" type="xml">
+            <form>
+                <header >
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group string="Personal Information">
+                            <field name="first_name"/>
+                            <field name="last_name"/>
+                            <field name="birth_date"/>
+                            <field name="age"/>
+                            <field name="blood_type" widget="radio" options="{'horizontal': true}"/>
+
+                        </group>
+                        <group string="Medical Information">
+                            <field name="cr_ratio"/>
+                            <field name="pcr"/>
+</group>
+                    </group>
+                    <group string="Additional Details">
+                        <field name="history"/>
+                        <field name="address"/>
+                        <field name="department_id"/>
+                    </group>
+                    <group string="Profile Image">
+                        <field name="profile_image" widget="image" class="oe_avatar"/>
+                    </group>
+                    <notebook>
+                        <page string="log">
+                            <field name="patient_log_ids">
+                                <tree editable="bottom">
+                                    <field name="date"/>
+                                    <field name="description"/>
+                                    <field name="created_by"/>
+                                </tree>
+                            </field>
+
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+  <!-- Window Action -->
+    <record id="patient_action_view" model="ir.actions.act_window">
+        <field name="name">Patients</field>
+        <field name="res_model">hms.patient</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Menu Item third layer-->
+    <menuitem id="menuitem_patient"
+            name="All Patients"
+            parent="menu_root_patient"
+            action="patient_action_view"/>
+</odoo>
