@@ -1,6 +1,7 @@
 <odoo>
     <menuitem id="menu_hms"
           name="Hospital Management System"
+          web_icon="hospital_management_system,static/description/icon.png"
     />
 
     <menuitem id="menu_root_patient"

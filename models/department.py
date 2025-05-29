@@ -13,3 +13,8 @@ class Department(models.Model):
         'hms.patient','department_id',
         string="Patients"
     )
+    doctor_ids = fields.One2many(
+        'hms.doctor',
+        'department_id',
+        string="Doctors in Department"
+    )

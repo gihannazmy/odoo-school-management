@@ -1,0 +1,4 @@
+finished lab2 part2 except
+With each change of the state a new log record is being
+created with a description of (State changed to
+NEW_STATE)

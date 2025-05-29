@@ -8,28 +8,47 @@
                 <field name="first_name"/>
                 <field name="last_name"/>
                 <field name="birth_date"/>
-                <field name="age"/>
-                <field name="blood_type" widget="radio" />
+                <field name="age" readonly="1"/>
+                <field name="blood_type" widget="radio"/>
                 <field name="state"/>
+                <field name="doctor_ids" widget="many2many_tags"/>
                 <field name="department_id"/>
-
-
+                <field name="department_capacity"/>
                 <field name="cr_ratio"/>
                 <field name="pcr"/>
                 <field name="history"/>
                 <field name="address"/>
                 <field name="profile_image" widget="image" class="oe_avatar"/>
-
-
             </tree>
         </field>
     </record>
+
     <record id="patient_form_view" model="ir.ui.view">
         <field name="name">patient.form</field>
         <field name="model">hms.patient</field>
         <field name="arch" type="xml">
             <form>
-                <header >
+                <header>
+                    <button name="action_add_log_wizard"
+                            type="object"
+                            class="btn-primary"
+                            string="Add Log"/>
+                    <button name="action_undetermined"
+                            type="object"
+                            class="btn-secondary"
+                            string="Undetermined"/>
+                    <button name="action_good"
+                            type="object"
+                            class="btn-success"
+                            string="Good"/>
+                    <button name="action_fair"
+                            type="object"
+                            class="btn-primary"
+                            string="Fair"/>
+                    <button name="action_serious"
+                            type="object"
+                            class="btn-danger"
+                            string="Serious"/>
                     <field name="state" widget="statusbar"/>
                 </header>
                 <sheet>
@@ -38,40 +57,43 @@
                             <field name="first_name"/>
                             <field name="last_name"/>
                             <field name="birth_date"/>
-                            <field name="age"/>
+                            <field name="age" readonly="1"/>
                             <field name="blood_type" widget="radio" options="{'horizontal': true}"/>
-
                         </group>
                         <group string="Medical Information">
-                            <field name="cr_ratio"/>
+                            <field name="department_id" domain="[('is_opened', '=', True)]"/>
+                            <field name="department_capacity" string="Department Capacity" readonly="1"/>
+                            <field name="doctor_ids" widget="many2many_tags"
+                                   domain="[('department_id', '=', department_id)]"
+                                   readonly="not department_id"/>
                             <field name="pcr"/>
-</group>
+                            <field name="cr_ratio" required="pcr"/>
+                        </group>
                     </group>
                     <group string="Additional Details">
-                        <field name="history"/>
+                        <field name="history" invisible="age &lt; 50"/>
                         <field name="address"/>
-                        <field name="department_id"/>
                     </group>
                     <group string="Profile Image">
                         <field name="profile_image" widget="image" class="oe_avatar"/>
                     </group>
                     <notebook>
-                        <page string="log">
+                        <page string="History Log">
                             <field name="patient_log_ids">
                                 <tree editable="bottom">
-                                    <field name="date"/>
+                                    <field name="create_date"/>
                                     <field name="description"/>
-                                    <field name="created_by"/>
+                                    <field name="create_uid"/>
                                 </tree>
                             </field>
-
                         </page>
                     </notebook>
                 </sheet>
             </form>
         </field>
     </record>
-  <!-- Window Action -->
+
+    <!-- Window Action -->
     <record id="patient_action_view" model="ir.actions.act_window">
         <field name="name">Patients</field>
         <field name="res_model">hms.patient</field>
@@ -80,7 +102,7 @@
 
     <!-- Menu Item third layer-->
     <menuitem id="menuitem_patient"
-            name="All Patients"
-            parent="menu_root_patient"
-            action="patient_action_view"/>
+              name="All Patients"
+              parent="menu_root_patient"
+              action="patient_action_view"/>
 </odoo>

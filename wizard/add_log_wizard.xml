@@ -1,0 +1,28 @@
+<odoo>
+    <record id="add_log_form_view" model="ir.ui.view">
+        <field name="name">add.log.form</field>
+        <field name="model">hms.add.log</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="create_date"/>
+                    <field name="description"/>
+                    <field name="create_uid"/>
+                </group>
+                <footer>
+                    <button name="action_add_log" type="object" class="btn-primary" string="Confirm"/>
+                    <button class="btn-danger" string="Close" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="add_log_action_view" model="ir.actions.act_window">
+        <field name="name">Add Log</field>
+        <field name="res_model">hms.add.log</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="hospital_management_system.add_log_form_view"/>
+        <field name="target">new</field>
+    </record>
+
+
+</odoo>

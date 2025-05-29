@@ -13,6 +13,7 @@
         'views/patient.xml',
         'views/doctor.xml',
         'views/department.xml',
+        'wizard/add_log_wizard.xml',
 
     ],
 
